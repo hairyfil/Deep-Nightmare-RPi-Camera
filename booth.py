@@ -49,9 +49,11 @@ def upload(name, path):
 	mydebugmsg("uploading " + path)
 
 	s3                  = boto.connect_s3()
-	temp_bucket_name  	= "temporary_incoming_images"
+	print ("s3 = ", s3)
+	temp_bucket_name	= "temporary-incoming-images"
 	temp_bucket 	    = s3.get_bucket(temp_bucket_name)
-
+	print ("temp_bucket = ", temp_bucket)
+	
 	imagehash = create_hash(path)
 	new_image_name = str(imagehash) + ".jpg"
 	
