@@ -1,14 +1,20 @@
 from picamera import PiCamera
-from time import sleep
-
-camera.resolution = (750, 750)
 
 camera = PiCamera()
+camera.resolution = (1024, 768)
 
 camera.start_preview()
-sleep(10)
-camera.stop_preview()
+
+counter = 1
 
 while True:
-    print ("")
+        x = raw_input ("Take my picture now!")
 
+        if x == 'x':
+                break
+
+        pathname = "/home/pi/Desktop/myphoto-" + str(counter) + ".jpg"
+        counter += 1
+        camera.capture(pathname)
+
+camera.stop_preview()
