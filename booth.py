@@ -1,8 +1,9 @@
+import os
+
 os.environ["BOTO_CONFIG"] = ".boto"
 
 import boto
 from boto.s3.key import Key
-import os
 import sys
 import time
 import logging
@@ -24,7 +25,7 @@ def mydebugmsg(msg):
 	return
 
 def create_hash(file):
-	BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
+	BUF_SIZE = 65536  # lets read stuff in 64kb chunks!:
 
 	md5 = hashlib.md5()
 
@@ -47,13 +48,17 @@ def upload(name, path):
 	mydebugmsg("uploading " + path)
 
     s3                  = boto.connect_s3()
-    before_bucket_name  = "deepnightmare-before"
-    before_bucket 	    = s3.get_bucket(before_bucket_name)
+    temp_bucket_name  = "temporary_incoming_images"
+    temp_bucket 	    = s3.get_bucket(temp_bucket_name)
 
     imagehash = create_hash(path)
     new_image_name = str(imagehash) + ".jpg"
     
-	dest_bucket = beforet_bucket.new_key(new_image_name)
+    mydebugmsg("hash = " + imagehash)
+    mydebugmsg("new image name = " + new_image_name)
+    mydebugmsg("path = " + path)
+    
+	dest_bucket = temp_bucket.new_key(new_image_name)
 	dest_bucket.set_contents_from_filename(path)
 	dest_bucket.set_acl('public-read')
 
