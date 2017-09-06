@@ -47,16 +47,16 @@ def create_hash(file):
 def upload(name, path):
 	mydebugmsg("uploading " + path)
 
-    s3                  = boto.connect_s3()
-    temp_bucket_name  = "temporary_incoming_images"
-    temp_bucket 	    = s3.get_bucket(temp_bucket_name)
+	s3                  = boto.connect_s3()
+	temp_bucket_name  = "temporary_incoming_images"
+	temp_bucket 	    = s3.get_bucket(temp_bucket_name)
 
-    imagehash = create_hash(path)
-    new_image_name = str(imagehash) + ".jpg"
-    
-    mydebugmsg("hash = " + imagehash)
-    mydebugmsg("new image name = " + new_image_name)
-    mydebugmsg("path = " + path)
+	imagehash = create_hash(path)
+	new_image_name = str(imagehash) + ".jpg"
+	
+	mydebugmsg("hash = " + imagehash)
+	mydebugmsg("new image name = " + new_image_name)
+	mydebugmsg("path = " + path)
 
 	dest_bucket = temp_bucket.new_key(new_image_name)
 	dest_bucket.set_contents_from_filename(path)
@@ -79,20 +79,20 @@ camera.start_preview()
 counter = 1
 
 while True:
-        x = raw_input ("Take my picture now!")
+		x = raw_input ("Take my picture now!")
 
-        if x == 'x':
-                break
+		if x == 'x':
+				break
 
-        image_name = "myphoto-" + str(counter) + ".jpg"
-        image_path = "/home/pi/Desktop/" + image_name
+		image_name = "myphoto-" + str(counter) + ".jpg"
+		image_path = "/home/pi/Desktop/" + image_name
 
-        mydebugmsg("image_name = " + image_name)
-        mydebugmsg("image_path = " + image_path)
-        
-        counter += 1
+		mydebugmsg("image_name = " + image_name)
+		mydebugmsg("image_path = " + image_path)
+		
+		counter += 1
 
-        camera.capture(image_path)
-        upload(image_name, image_path)
+		camera.capture(image_path)
+		upload(image_name, image_path)
 
 camera.stop_preview()
