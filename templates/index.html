@@ -3,10 +3,13 @@
     <div class="controls">
 
         <a id="startStop" href="/startStop/start" class="btn btn-block btn-lg btn-default" role="button">Turn on</a>
-        <a id="picture" href="/picture/take" class="btn btn-block btn-lg btn-default" role="button">Take a picture</a>
+        <a id="picture" href="/take_picture" class="btn btn-block btn-lg btn-default" role="button">Take a picture</a>
 
     </div>
-    {% block content %}
-        <div>The Default Thing</div>
-    {% endblock content %}
+    {% if switche %}
+        <img src="{{ url_for('video_feed') }}" class="video">
+    {% else %}
+    {{ super() }}
+        <p>gujana </p>
+    {% endif %}
 </div>

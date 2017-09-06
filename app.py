@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('vf.html', switche=switche)
+    return render_template('index.html', switche=switche)
 
 def gen(camera):
     """Video streaming generator function."""
