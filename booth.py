@@ -49,10 +49,9 @@ def upload(name, path):
 	mydebugmsg("uploading " + path)
 
 	s3                  = boto.connect_s3()
-	print ("s3 = ", s3)
+
 	temp_bucket_name	= "temporary-incoming-images"
 	temp_bucket 	    = s3.get_bucket(temp_bucket_name)
-	print ("temp_bucket = ", temp_bucket)
 	
 	imagehash = create_hash(path)
 	new_image_name = str(imagehash) + ".jpg"
@@ -82,7 +81,7 @@ camera.start_preview()
 counter = 1
 
 while True:
-		x = raw_input ("Take my picture now!")
+		x = raw_input ("Hit Enter to take your picture\r\nEnter 'x' to quit")
 
 		if x == 'x':
 				print ("Thank you and goodbye!")
