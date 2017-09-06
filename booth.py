@@ -57,7 +57,7 @@ def upload(name, path):
     mydebugmsg("hash = " + imagehash)
     mydebugmsg("new image name = " + new_image_name)
     mydebugmsg("path = " + path)
-    
+
 	dest_bucket = temp_bucket.new_key(new_image_name)
 	dest_bucket.set_contents_from_filename(path)
 	dest_bucket.set_acl('public-read')
@@ -87,6 +87,9 @@ while True:
         image_name = "myphoto-" + str(counter) + ".jpg"
         image_path = "/home/pi/Desktop/" + image_name
 
+        mydebugmsg("image_name = " + image_name)
+        mydebugmsg("image_path = " + image_path)
+        
         counter += 1
 
         camera.capture(image_path)
