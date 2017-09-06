@@ -45,10 +45,11 @@ def create_hash(file):
 #
 
 def upload(name, path):
+	
 	mydebugmsg("uploading " + path)
 
 	s3                  = boto.connect_s3()
-	temp_bucket_name  = "temporary_incoming_images"
+	temp_bucket_name  	= "temporary_incoming_images"
 	temp_bucket 	    = s3.get_bucket(temp_bucket_name)
 
 	imagehash = create_hash(path)
@@ -82,6 +83,7 @@ while True:
 		x = raw_input ("Take my picture now!")
 
 		if x == 'x':
+				print ("Thank you and goodbye!")
 				break
 
 		image_name = "myphoto-" + str(counter) + ".jpg"
