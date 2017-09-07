@@ -2,7 +2,8 @@
 
 
 def ds18b20Read():
-	tfile = open("/sys/bus/w1/devices/28-0000062abd71/w1_slave")
+#	tfile = open("/sys/bus/w1/devices/28-0000062abd71/w1_slave")
+	tfile = open("/sys/bus/w1/devices/28-031656a2b4ff/w1_slave")
 	text = tfile.read()
 	tfile.close()
 	secondline = text.split("\n")[1]
