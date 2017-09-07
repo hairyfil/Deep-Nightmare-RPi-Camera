@@ -56,9 +56,9 @@ def create_hash(file):
 def upload(name, path, temperature):
 	
 	mydebugmsg("uploading " + path)
+	mydebugmsg("temperature = " + str(temperature))
 
 	s3                  = boto.connect_s3()
-
 	temp_bucket_name	= "temporary-incoming-images"
 	temp_bucket 	    = s3.get_bucket(temp_bucket_name)
 	
