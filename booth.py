@@ -94,7 +94,7 @@ counter = 1
 # Setup GPIO sensor for temperature & digital display
 #
 
-setup_GPIO)
+setup_GPIO())
 current_temp = 0.0
 
 while True:
