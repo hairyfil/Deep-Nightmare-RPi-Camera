@@ -9,6 +9,9 @@ import time
 import logging
 import hashlib
 from picamera import PiCamera
+import RPi.GPIO as GPIO
+import ds18b20
+import segment
 
 LOGGING     = True
 VERBOSITY   = False
@@ -16,6 +19,12 @@ DEBUGGING   = True
 
 if LOGGING:
 	logging.basicConfig(filename='booth.log',level=logging.DEBUG)
+
+def setup_GPIO():
+	segment.TM1638_init()
+
+def cleanup_GPIO():
+	GPIO.cleanup()
 
 def mydebugmsg(msg):
 	if LOGGING:
@@ -44,7 +53,7 @@ def create_hash(file):
 # Upload the photo to S3 for later processing
 #
 
-def upload(name, path):
+def upload(name, path, temperature):
 	
 	mydebugmsg("uploading " + path)
 
@@ -60,9 +69,10 @@ def upload(name, path):
 	mydebugmsg("new image name = " + new_image_name)
 	mydebugmsg("path = " + path)
 
-	dest_bucket = temp_bucket.new_key(new_image_name)
-	dest_bucket.set_contents_from_filename(path)
-	dest_bucket.set_acl('public-read')
+	key = temp_bucket.new_key(new_image_name)
+	key.set_metadata ("temperature", temperature)
+	key.set_contents_from_filename(path)
+	key.set_acl('public-read')
 
 	return
 
@@ -80,11 +90,22 @@ camera.start_preview()
 
 counter = 1
 
+# 
+# Setup GPIO sensor for temperature & digital display
+#
+
+setup_GPIO)
+current_temp = 0.0
+
 while True:
 		x = raw_input ("Hit Enter to take your picture\r\nEnter 'x' to quit")
 
+		current_temp = ds18b20.ds18b20Read()
+		segment.numberDisplay_dec(current_temp)
+
 		if x == 'x':
 				print ("Thank you and goodbye!")
+				cleanup_GPIO()
 				break
 
 		image_name = "myphoto-" + str(counter) + ".jpg"
@@ -96,6 +117,6 @@ while True:
 		counter += 1
 
 		camera.capture(image_path)
-		upload(image_name, image_path)
+		upload(image_name, image_path, current_temp)
 
 camera.stop_preview()
