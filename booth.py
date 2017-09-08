@@ -71,7 +71,7 @@ def upload(name, path, temperature):
 
 	key = temp_bucket.new_key(new_image_name)
 	key.set_metadata ("temperature", str(temperature))
-	key.set_metadata ("myhashvalue", "123456789")
+	key.set_metadata ("myhashvalue", image_hash)
 	key.set_contents_from_filename(path)
 	key.set_acl('public-read')
 
